@@ -33,6 +33,7 @@ def load_data(day):
                 return None
         
         df = df.apply(lambda col: col.str.upper() if col.dtype == 'object' else col)
+        df = df[df['Company'] != 'COMPANY']
         df.rename(columns={
             'Company': 'Company',
             'Name': 'Name',
