@@ -16,6 +16,7 @@ def load_data(day):
             for file in os.listdir(DATA_FOLDER):
                 if file.startswith("placement_results_day_") and file.endswith(".csv"):
                     df = pd.read_csv(os.path.join(DATA_FOLDER, file))
+                    df['Day'] = file.split('_')[-1].replace('.csv', '').title()
                     dfs.append(df)
             if dfs:
                 df = pd.concat(dfs, ignore_index=True)
