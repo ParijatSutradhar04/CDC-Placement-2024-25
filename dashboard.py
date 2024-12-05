@@ -35,6 +35,13 @@ def load_data(day):
             if os.path.exists(filename):
                 df = pd.read_csv(filename)
                 df['Day'] = day
+                df = df.apply(lambda col: col.str.upper() if col.dtypes == 'object' and col.map(type).eq(str).all() else col)
+                df = df[df['Company'] != 'COMPANY']
+                df.rename(columns={
+                    'Company': 'Company',
+                    'Name': 'Name',
+                    'Roll No': 'Roll No.'
+                }, inplace=True)
             else:
                 st.warning(f"DATA NOT AVAILABLE FOR {day.upper()}")
                 return None
