@@ -17,6 +17,13 @@ def load_data(day):
                 if file.startswith("placement_results_day_") and file.endswith(".csv"):
                     df = pd.read_csv(os.path.join(DATA_FOLDER, file))
                     df['Day'] = file.split('_')[-1].replace('.csv', '').title()
+                    df = df.apply(lambda col: col.str.upper() if col.dtype == 'object' else col)
+                    df = df[df['Company'] != 'COMPANY']
+                    df.rename(columns={
+                        'Company': 'Company',
+                        'Name': 'Name',
+                        'Roll No': 'Roll No.'
+                    }, inplace=True)
                     dfs.append(df)
             if dfs:
                 df = pd.concat(dfs, ignore_index=True)
@@ -32,13 +39,6 @@ def load_data(day):
                 st.warning(f"DATA NOT AVAILABLE FOR {day.upper()}")
                 return None
         
-        df = df.apply(lambda col: col.str.upper() if col.dtype == 'object' else col)
-        df = df[df['Company'] != 'COMPANY']
-        df.rename(columns={
-            'Company': 'Company',
-            'Name': 'Name',
-            'Roll No': 'Roll No.'
-        }, inplace=True)
         df['Department'] = df['Roll No.'].str[2:4]
         df['Special_Dep'] = df['Roll No.'].str.slice(5, 7).apply(lambda x: x if pd.notnull(x) and x.isalpha() else None)
         df['Department'] = df.apply(lambda row: row['Special_Dep'] if pd.notnull(row['Special_Dep']) else row['Department'], axis=1)
