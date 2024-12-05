@@ -23,7 +23,7 @@ def load_data(day):
                         'Company': 'Company',
                         'Name': 'Name',
                         'Roll No': 'Roll No.'
-                    }, inplace=True
+                    }, inplace=True)
                     dfs.append(df)
             if dfs:
                 df = pd.concat(dfs, ignore_index=True)
