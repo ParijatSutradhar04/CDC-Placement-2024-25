@@ -17,13 +17,13 @@ def load_data(day):
                 if file.startswith("placement_results_day_") and file.endswith(".csv"):
                     df = pd.read_csv(os.path.join(DATA_FOLDER, file))
                     df['Day'] = file.split('_')[-1].replace('.csv', '').title()
-                    df = df.apply(lambda col: col.str.upper() if col.dtype == 'object' else col)
+                    df = df.apply(lambda col: col.str.upper() if col.dtypes == 'object' and col.map(type).eq(str).all() else col)
                     df = df[df['Company'] != 'COMPANY']
                     df.rename(columns={
                         'Company': 'Company',
                         'Name': 'Name',
                         'Roll No': 'Roll No.'
-                    }, inplace=True)
+                    }, inplace=True
                     dfs.append(df)
             if dfs:
                 df = pd.concat(dfs, ignore_index=True)
