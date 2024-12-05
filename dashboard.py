@@ -78,7 +78,7 @@ if uploaded_pdf is not None:
     pdf_to_csv(uploaded_pdf, output_csv)
 
 # Day selection
-selected_day = st.sidebar.selectbox("Select Day", ["Day 1", "Day 2", "Day 3", "All Days"])
+selected_day = st.sidebar.selectbox("Select Day", ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "All Days"])
 df = load_data(selected_day)
 
 if df is not None:
