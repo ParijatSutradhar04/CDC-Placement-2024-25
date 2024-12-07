@@ -156,7 +156,8 @@ if df is not None:
     expanded_data = expand_grouped_data(filtered_data)
 
     st.subheader("Filtered Data")
-    st.dataframe(expanded_data)
+    expanded_data.index = expanded_data.index + 1
+    st.dataframe(expanded_data, use_container_width=True)
 
     # Visualization
     st.subheader("Number of Students by Department, Course, and Company")
